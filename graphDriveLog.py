@@ -4,7 +4,7 @@ import numpy as np
 import pandas as pd
 
 df = pd.read_csv('DriveLog.csv')
-xaxis=df['sysTime']
+xaxis=df['sysTime']*10E-9
 layout = Layout(title='DriveLog.csv graph', plot_bgcolor='rgb(230, 230,230)')#,height=1500,width=1500)
 
 #position data
