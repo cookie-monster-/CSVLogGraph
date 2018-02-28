@@ -3,25 +3,31 @@ from plotly.graph_objs import Scatter, Layout, Figure
 import numpy as np
 import pandas as pd
 
-df = pd.read_csv('DriveLog.csv')
-xaxis=df['sysTime']*10E-9
+read = pd.read_csv('DriveLog.csv')
+df = read[read.driveMode == 'PATH_FOLLOWING']
+startPoint = read.shape[0] - df.shape[0]
+startTime = df.ix[startPoint, 'sysTime']
+xaxis=(df['sysTime']-startTime)*10E-10 #should be 10E-9 but that makes our time 10x too long?????
 layout = Layout(title='DriveLog.csv graph', plot_bgcolor='rgb(230, 230,230)')#,height=1500,width=1500)
 
+def data(arg):
+	return Scatter(x=xaxis, y=df[arg], mode='lines', name=arg)
+
 #position data
-leftPathPos = Scatter(x=xaxis, y=df['leftPathPos'], mode='lines', name='leftPathPos')
-leftEncoder = Scatter(x=xaxis, y=df['leftEncoder'], mode='lines', name='leftEncoder')
-rightPathPos = Scatter(x=xaxis, y=df['rightPathPos'], mode='lines', name='rightPathPos')
-rightEncoder = Scatter(x=xaxis, y=df['rightEncoder'], mode='lines', name='rightEncoder')
+leftPathPos = data('leftPathPos')
+leftEncoder = data('leftEncoder')
+rightPathPos = data('rightPathPos')
+rightEncoder = data('rightEncoder')
 
 #velocity data
-leftPathVel = Scatter(x=xaxis, y=df['leftPathVel'], mode='lines', name='leftPathVel')
-leftEncoderVel = Scatter(x=xaxis, y=df['leftEncoderVel'], mode='lines', name='leftEncoderVel')
-rightPathVel = Scatter(x=xaxis, y=df['rightPathVel'], mode='lines', name='rightPathVel')
-rightEncoderVel = Scatter(x=xaxis, y=df['rightEncoderVel'], mode='lines', name='rightEncoderVel')
+leftPathVel = data('leftPathVel')
+leftEncoderVel = data('leftEncoderVel')
+rightPathVel = data('rightPathVel')
+rightEncoderVel = data('rightEncoderVel')
 
 #heading data
-pathHdg = Scatter(x=xaxis, y=df['pathHdg'], mode='lines', name='pathHdg')
-gyroYaw = Scatter(x=xaxis, y=df['gyroYaw'], mode='lines', name='gyroYaw')
+pathHdg = data('pathHdg')
+gyroYaw = data('gyroYaw')
 
 #set up which data should be graphed together
 pos = Figure(data=[leftPathPos, leftEncoder, rightPathPos, rightEncoder], layout=layout)
