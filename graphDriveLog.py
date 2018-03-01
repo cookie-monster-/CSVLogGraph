@@ -23,7 +23,8 @@ hdg = ['gyroYaw','pathHdg']
 pos = ['leftEncoder','rightEncoder','leftPathPos','rightPathPos']
 vel = ['leftEncoderVel','rightEncoderVel','leftPathVel','rightPathVel']
 acc = ['leftPathAcc','rightPathAcc']
-motor = ['leftMotorPercent','rightMotorPercent','leftMotorVoltage','rightMotorVoltage','leftMotorCurrent','rightMotorCurrent','driveStick','turnStick','leftBusVoltage','rightBusVoltage']
+motor = ['leftMotorPercent','rightMotorPercent','leftMotorVoltage','rightMotorVoltage','leftMotorCurrent','rightMotorCurrent'
+	,'driveStick','turnStick','leftBusVoltage','rightBusVoltage']
 misc = ['leftTemp','rightTemp','pathStep0','pathStep1']
 	
 plot_cols(hdg,'hdg.html')
